@@ -1,0 +1,45 @@
+{
+  "environment": "production",
+  "marketplace": "EBAY_US",
+  "poll_interval_seconds": 300,
+  "max_results_per_watch": 50,
+  "max_sends_per_run": 10,
+  "calculate_profit": false,
+  "title_must_exclude": ["button", "button up", "button-up", "flannel", "woven", "snap", "collared", "dress shirt", "work shirt"],
+  "authenticity_screen": { "mode": "filter_repro", "deep_check": true, "ocr_check": true, "ocr_max_images": 6 },
+
+  "instant_search": {
+    "max_price": 170,
+    "currency": "USD",
+    "conditions": ["USED"],
+    "buying_options": ["FIXED_PRICE", "AUCTION"],
+    "max_results": 5
+  },
+
+  "watches": [
+    {
+      "name": "WCC เสื้อยืด (tee) L/XL",
+      "query": "west coast choppers (tee,t-shirt) (L,XL,Large) -reproduction -repro -replica -reprint -bootleg -gildan -button -flannel -woven -snap -collared -\"dress shirt\"",
+      "max_price": 170,
+      "currency": "USD",
+      "conditions": ["USED"],
+      "buying_options": ["FIXED_PRICE", "AUCTION"]
+    },
+    {
+      "name": "WCC เสื้อแขนยาว L/XL",
+      "query": "west coast choppers long sleeve (L,XL,Large) -reproduction -repro -replica -reprint -bootleg -gildan -button -flannel -woven -snap -collared -\"dress shirt\"",
+      "max_price": 170,
+      "currency": "USD",
+      "conditions": ["USED"],
+      "buying_options": ["FIXED_PRICE", "AUCTION"]
+    },
+    {
+      "name": "WCC OG (ค้นด้วยรูปตัวอย่าง)",
+      "image": "reference_images/wcc_og_front.jpg",
+      "max_price": 170,
+      "currency": "USD",
+      "conditions": ["USED"],
+      "buying_options": ["FIXED_PRICE", "AUCTION"]
+    }
+  ]
+}

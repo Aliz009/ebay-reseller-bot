@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+saved_items.json
+items_index.json

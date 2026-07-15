@@ -1,0 +1,41 @@
+name: หาเสื้อ eBay ทุก 15 นาที
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # ทุก 15 นาที (GitHub อาจดีเลย์บ้างช่วงคนใช้เยอะ)
+  workflow_dispatch: {}        # กดรันเองได้จากหน้า Actions
+
+permissions:
+  contents: write              # ให้ commit seen_items.json กลับได้ (กันแจ้งซ้ำ)
+
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: ติดตั้ง tesseract (สำหรับ OCR อ่านแท็ก — ฟรี)
+        run: sudo apt-get update && sudo apt-get install -y tesseract-ocr
+
+      - name: ติดตั้ง dependencies
+        run: pip install -r requirements.txt
+
+      - name: รันบอทหาของ 1 รอบ
+        env:
+          EBAY_CLIENT_ID: ${{ secrets.EBAY_CLIENT_ID }}
+          EBAY_CLIENT_SECRET: ${{ secrets.EBAY_CLIENT_SECRET }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m bot.main
+
+      - name: จำรายการที่แจ้งแล้ว (commit กลับ)
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add seen_items.json || true
+          git commit -m "update seen items [skip ci]" || echo "ไม่มีอะไรเปลี่ยน"
+          git push || echo "push ไม่สำเร็จ (ข้ามได้)"
