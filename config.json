@@ -6,7 +6,7 @@
   "max_sends_per_run": 10,
   "calculate_profit": false,
   "title_must_exclude": ["button", "button up", "button-up", "flannel", "woven", "snap", "collared", "dress shirt", "work shirt"],
-  "authenticity_screen": { "mode": "filter_repro", "deep_check": true, "ocr_check": true, "ocr_max_images": 6 },
+  "authenticity_screen": { "mode": "strict", "deep_check": true, "ocr_check": true, "ocr_max_images": 6 },
 
   "instant_search": {
     "max_price": 170,

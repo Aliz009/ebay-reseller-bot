@@ -4,3 +4,5 @@ __pycache__/
 .env
 saved_items.json
 items_index.json
+
+SESSION.md
