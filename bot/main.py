@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import argparse
+import glob
 import json
 import os
 import sys
@@ -62,9 +63,26 @@ def run_once(client: ebay.EbayClient, config: dict, env: dict, prime: bool = Fal
         name = watch.get("name", watch.get("query", "watch"))
         min_profit = watch.get("min_profit_percent")
         image_path = watch.get("image")
+        image_dir = watch.get("image_dir")   # ค้นจากทุกรูปในโฟลเดอร์ (jpg/png)
         try:
-            if image_path:
-                # โหมดค้นด้วยรูป — หา item ที่ลาย/หน้าตาคล้ายรูปตัวอย่าง
+            if image_dir:
+                folder = image_dir if os.path.isabs(image_dir) else os.path.join(pipeline.ROOT, image_dir)
+                paths = sorted(glob.glob(os.path.join(folder, "*.jpg"))
+                               + glob.glob(os.path.join(folder, "*.jpeg"))
+                               + glob.glob(os.path.join(folder, "*.png")))
+                if not paths:
+                    print(f"[{name}] ไม่มีรูป jpg/png ใน {image_dir} — ข้าม (ปกติบน cloud, รูปอยู่เฉพาะเครื่อง)")
+                    continue
+                items, seen_ids = [], set()
+                for p in paths:
+                    for it in client.search_by_image(pipeline.load_image_b64(p), watch, limit=limit):
+                        iid = it.get("itemId")
+                        if iid and iid not in seen_ids:
+                            seen_ids.add(iid)
+                            items.append(it)
+                print(f"[{name}] ค้นจาก {len(paths)} รูป → รวมได้ {len(items)} รายการ")
+            elif image_path:
+                # โหมดค้นด้วยรูปเดียว
                 items = client.search_by_image(pipeline.load_image_b64(image_path), watch, limit=limit)
             else:
                 items = client.search(watch, limit=limit)

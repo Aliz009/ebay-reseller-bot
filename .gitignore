@@ -6,3 +6,12 @@ saved_items.json
 items_index.json
 
 SESSION.md
+
+# รูป reference เป็นส่วนตัว ไม่ขึ้น public repo (ลิขสิทธิ์)
+reference_images/*.jpg
+reference_images/*.jpeg
+reference_images/*.png
+reference_images/*.heic
+reference_images/*.HEIC
+reference_images/*.JPG
+reference_images/.DS_Store

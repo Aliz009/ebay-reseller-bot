@@ -32,14 +32,6 @@
       "currency": "USD",
       "conditions": ["USED"],
       "buying_options": ["FIXED_PRICE", "AUCTION"]
-    },
-    {
-      "name": "WCC OG (ค้นด้วยรูปตัวอย่าง)",
-      "image": "reference_images/wcc_og_front.jpg",
-      "max_price": 170,
-      "currency": "USD",
-      "conditions": ["USED"],
-      "buying_options": ["FIXED_PRICE", "AUCTION"]
     }
   ]
 }
